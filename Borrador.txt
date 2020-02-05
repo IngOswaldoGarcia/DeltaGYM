@@ -1,0 +1,256 @@
+	//getPaiments();
+    	//getRegistries();
+    	getClients();
+    	//getConcepts();
+
+    	function getPaiments(){
+
+				var xhr = new XMLHttpRequest();
+				
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerPagos', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+    				const result = JSON.parse(this.responseText);
+    				/*for(let i = 0; i < result.length; i++){
+							var date = moment(result[i].Fecha).format('DD-MM-YYYY HH::mm::ss');
+						$('#get_paiments tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Id_Clientes+'</td>'
+														+'<td>'+result[i].Id_Conceptos+'</td>'
+														+'<td>'+result[i].CantidadPagada+'</td>'
+														
+														+'<td>'+date.toString()+'</td></tr>');
+    				}*/
+    				//$('#get_paiments').html(this.responseText);
+						//console.log('Hola 2: '+result);
+						
+    			}
+    		
+    		}
+    		xhr.send();
+    		
+        }
+
+        function getRegistries(clientMethod){
+
+					console.log(clientMethod[0].Id);
+					//var clientInfo = JSON.parse(clientMethod);
+
+        var xhr = new XMLHttpRequest();
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerRegistros', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+						const result = JSON.parse(this.responseText);
+						let array = [];
+						let arrayCounter = 0; 
+						for(let i = 0; i < clientMethod.length; i++){
+							array[arrayCounter] = [];
+							for(let j = 0; j < result.length; j++){
+								if(clientMethod[i].Id === result[j].Id_Clientes){
+								var dateIngreso = moment(result[i].Ingreso).format('DD-MM-YYYY');
+								var dateSalida = moment(result[i].Salida).format('DD-MM-YYYY');
+									array[arrayCounter][0] = clientMethod[i].Id;
+									array[arrayCounter][1] = clientMethod[i].Nombre;
+									array[arrayCounter][2] = clientMethod[i].ApPaterno;
+									array[arrayCounter][3] = clientMethod[i].ApMaterno;
+									array[arrayCounter][4] += 'Fecha Inicial: ' + dateIngreso + ' FechaFinal: '+ dateSalida+' -----';
+									console.log(arrayCounter);
+								}
+								//array[i][j]
+								//var dateIngreso = moment(result[j].Ingreso).format('DD-MM-YYYY');
+								//var dateSalida = moment(result[j].Salida).format('DD-MM-YYYY');
+
+
+							/*$('#get_registries tbody').append('<tr><td>'+result[j].Id+'</td>'
+															+'<td>'+result[j].Id_Clientes+'</td>'
+															+'<td>'+dateIngreso+'</td>'
+															+'<td>'+dateSalida+'</td></tr>');*/
+							}
+							arrayCounter++;
+						}
+						for(let i = 0; i < arrayCounter; i++){
+								$('#show_all_clients_hours').append('<tr><td>'+array[i][0]+'</td>'
+								+'<td>'+array[i][1]+'</td>'
+								+'<td>'+array[i][2]+'</td>'
+								+'<td>'+array[i][3]+'</td>'
+								+'<td>'+array[i][4]+'</td></tr>');
+						}
+    				
+    				console.log('Hola 2: '+result);
+    			}
+    		
+    		}
+    		xhr.send();
+        }
+
+        function getClients(){
+
+    		var xhr = new XMLHttpRequest();
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerClientes', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+						//JSON.parse(this.responseText);
+    				//$('#get_clients tbody').html(result);
+    				//console.log('Hola 2: '+result);
+    				/*for(let i = 0; i < result.length; i++){
+							var date = moment(result[i].FechaCorte).format('DD-MM-YYYY HH::mm::ss');
+						$('#get_clients tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Nombre+'</td>'
+														+'<td>'+result[i].ApPaterno+'</td>'
+														+'<td>'+result[i].ApMaterno+'</td>'
+														+'<td>'+result[i].Telefono+'</td>'
+														+'<td>'+result[i].Celular+'</td>'
+														+'<td>'+result[i].Localidad+'</td>'
+														+'<td>'+result[i].Domicilio+'</td>'
+														+'<td>'+result[i].FechaImgreso+'</td>'
+														+'<td>'+date+'</td>'
+														+'<td>'+result[i].Membresia+'</td>'
+														+'<td>'+result[i].Estatus+'</td>'
+														+'<td>'+result[i].Notas+'</td></tr>');
+						}*/
+						getRegistries(JSON.parse(this.responseText));
+    			}
+    		
+    		}
+    		xhr.send();
+
+				}
+				
+				
+
+        function getConcepts(){
+
+
+	    	var xhr = new XMLHttpRequest();
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerConceptos', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+    				const result = JSON.parse(this.responseText);
+    				//$('#get_concepts').html(result);
+
+    				for(let i = 0; i < result.length; i++){
+						$('#get_concepts tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Concepto+'</td>'
+														+'<td>'+result[i].Costo+'</td>'
+														+'<td>'+result[i].Descripcion+'</td>'
+														+'<td>'+result[i].Estatus+'</td>'
+														+'<td>'+result[i].Periodo+'</td></tr>');
+    				}
+    				//console.log('Hola 2: '+result);
+    			}
+    		
+    		}
+    		xhr.send();
+	    	}
+/////////////////////OTRO//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+getPaiments();
+    	getRegistries();
+    	getClients();
+    	getConcepts();
+
+    	function getPaiments(){
+
+				var xhr = new XMLHttpRequest();
+				
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerPagos', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+    				const result = JSON.parse(this.responseText);
+    				for(let i = 0; i < result.length; i++){
+							var date = moment(result[i].Fecha).format('DD-MM-YYYY HH::mm::ss');
+						$('#get_paiments tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Id_Clientes+'</td>'
+														+'<td>'+result[i].Id_Conceptos+'</td>'
+														+'<td>'+result[i].CantidadPagada+'</td>'
+														
+														+'<td>'+date.toString()+'</td></tr>');
+    				}
+    				//$('#get_paiments').html(this.responseText);
+    				//console.log('Hola 2: '+result);
+    			}
+    		
+    		}
+    		xhr.send();
+    		
+        }
+
+        function getRegistries(){
+
+        	var xhr = new XMLHttpRequest();
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerRegistros', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+    				const result = JSON.parse(this.responseText);
+    				for(let i = 0; i < result.length; i++){
+							var dateIngreso = moment(result[i].Ingreso).format('DD-MM-YYYY HH::mm::ss');
+							var dateSalida = moment(result[i].Salida).format('DD-MM-YYYY HH::mm::ss');
+						$('#get_registries tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Id_Clientes+'</td>'
+														+'<td>'+dateIngreso+'</td>'
+														+'<td>'+dateSalida+'</td></tr>');
+    				}
+    				//console.log('Hola 2: '+result);
+    			}
+    		
+    		}
+    		xhr.send();
+        }
+
+        function getClients(){
+
+    		var xhr = new XMLHttpRequest();
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerClientes', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+						
+    				const result = JSON.parse(this.responseText);
+    				$('#get_clients tbody').html(result);
+    				//console.log('Hola 2: '+result);
+    				for(let i = 0; i < result.length; i++){
+							var date = moment(result[i].FechaCorte).format('DD-MM-YYYY HH::mm::ss');
+						$('#get_clients tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Nombre+'</td>'
+														+'<td>'+result[i].ApPaterno+'</td>'
+														+'<td>'+result[i].ApMaterno+'</td>'
+														+'<td>'+result[i].Telefono+'</td>'
+														+'<td>'+result[i].Celular+'</td>'
+														+'<td>'+result[i].Localidad+'</td>'
+														+'<td>'+result[i].Domicilio+'</td>'
+														+'<td>'+result[i].FechaImgreso+'</td>'
+														+'<td>'+date+'</td>'
+														+'<td>'+result[i].Membresia+'</td>'
+														+'<td>'+result[i].Estatus+'</td>'
+														+'<td>'+result[i].Notas+'</td></tr>');
+    				}
+    			}
+    		
+    		}
+    		xhr.send();
+
+				}
+				
+				
+
+        function getConcepts(){
+
+
+	    	var xhr = new XMLHttpRequest();
+    		xhr.open('GET', 'http://deltagym.azurewebsites.net/Gimnasio/servicios/ObtenerConceptos', true);
+    		xhr.onload = function(){
+    			if(this.status === 200){
+    				const result = JSON.parse(this.responseText);
+    				//$('#get_concepts').html(result);
+
+    				for(let i = 0; i < result.length; i++){
+						$('#get_concepts tbody').append('<tr><td>'+result[i].Id+'</td>'
+														+'<td>'+result[i].Concepto+'</td>'
+														+'<td>'+result[i].Costo+'</td>'
+														+'<td>'+result[i].Descripcion+'</td>'
+														+'<td>'+result[i].Estatus+'</td>'
+														+'<td>'+result[i].Periodo+'</td></tr>');
+    				}
+    				//console.log('Hola 2: '+result);
+    			}
+    		
+    		}
+    		xhr.send();
+	    	}
